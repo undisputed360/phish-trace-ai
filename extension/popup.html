@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>PhishTrace AI</title>
+    <style>
+      body {
+        width: 320px;
+        padding: 16px;
+        font-family: Arial, sans-serif;
+        background: #111;
+        color: #fff;
+        margin: 0;
+      }
+      h2 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #1d4ed8;
+      }
+      #result {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #1f2937;
+        font-size: 13px;
+        display: none;
+      }
+      .safe {
+        border-left: 4px solid #22c55e;
+      }
+      .danger {
+        border-left: 4px solid #ef4444;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>PhishTrace AI</h2>
+    <button id="scanBtn">Scan Current Page</button>
+    <div id="result"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>
