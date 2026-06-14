@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = "https://phishtrace-ai-api.onrender.com";
+
 function ThreatFeed() {
   const [feed, setFeed] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ function ThreatFeed() {
 
   const fetchFeed = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/threat-feed");
+      const response = await axios.get("${API_URL}/threat-feed");
       setFeed(response.data);
     } catch (error) {
       setFeed({ error: "Failed to load threat feed" });

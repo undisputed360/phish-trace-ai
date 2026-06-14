@@ -1,3 +1,5 @@
+const API_URL = "https://phishtrace-ai-api.onrender.com";
+// const API_URL = '${API_URL}';  // for local dev
 // Get current tab URL on popup open
 let currentUrl = "";
 
@@ -26,7 +28,7 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
   scanBtn.innerHTML = '<span class="loading-spinner"></span> Analyzing...';
 
   try {
-    const response = await fetch("http://localhost:8000/analyze", {
+    const response = await fetch("${API_URL}/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: currentUrl }),

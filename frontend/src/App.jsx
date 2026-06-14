@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import ThreatFeed from "./ThreatFeed";
+const API_URL = "https://phishtrace-ai-api.onrender.com";
+// For local dev, comment the above and uncomment below:
+// const API_URL = '${API_URL}';
 
 function App() {
   const [url, setUrl] = useState("");
@@ -14,7 +17,7 @@ function App() {
     setLoading(true);
     setResult(null);
     try {
-      const response = await axios.post("http://localhost:8000/analyze", {
+      const response = await axios.post("${API_URL}/analyze", {
         url,
       });
       setResult(response.data);
@@ -189,7 +192,7 @@ function App() {
             <button
               onClick={async () => {
                 try {
-                  await axios.post("http://localhost:8000/report", {
+                  await axios.post("${API_URL}/report", {
                     url: result.url,
                     risk_score: result.risk_score,
                     is_suspicious: result.is_suspicious,
