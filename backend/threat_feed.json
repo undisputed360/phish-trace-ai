@@ -1,0 +1,10 @@
+[
+  {
+    "url": "http://faceb00k.com/login",
+    "risk_score": 100.0,
+    "is_suspicious": true,
+    "reported_by": "web-user",
+    "reported_at": "2026-06-14T17:29:58.911898",
+    "id": 1
+  }
+]

@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import ThreatFeed from "./ThreatFeed";
 
 function App() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("url");
+  const [page, setPage] = useState("scanner");
+
+  if (page === "feed") return <ThreatFeed />;
 
   const analyzeUrl = async () => {
     setLoading(true);
@@ -31,12 +34,20 @@ function App() {
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <span className="text-2xl">🛡️</span>
-          <h1 className="text-2xl font-bold">PhishTrace AI</h1>
-          <span className="text-xs bg-blue-600 px-2 py-1 rounded-full ml-2">
-            AI-Powered
-          </span>
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🛡️</span>
+            <h1 className="text-2xl font-bold">PhishTrace AI</h1>
+            <span className="text-xs bg-blue-600 px-2 py-1 rounded-full">
+              AI-Powered
+            </span>
+          </div>
+          <button
+            onClick={() => setPage("feed")}
+            className="text-sm text-blue-400 hover:text-blue-300 transition"
+          >
+            🌐 Threat Feed
+          </button>
         </div>
       </div>
 
@@ -173,6 +184,26 @@ function App() {
                 </ul>
               </div>
             )}
+
+            {/* Report Button */}
+            <button
+              onClick={async () => {
+                try {
+                  await axios.post("http://localhost:8000/report", {
+                    url: result.url,
+                    risk_score: result.risk_score,
+                    is_suspicious: result.is_suspicious,
+                    reported_by: "web-user",
+                  });
+                  alert("✅ URL reported to threat feed!");
+                } catch (e) {
+                  alert("Failed to report. Is the backend running?");
+                }
+              }}
+              className="w-full bg-yellow-600/20 border border-yellow-500/40 hover:bg-yellow-600/30 rounded-xl p-3 text-yellow-300 text-sm font-semibold transition text-center"
+            >
+              🚨 Report This URL to Community Threat Feed
+            </button>
 
             {/* Raw URL */}
             <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">

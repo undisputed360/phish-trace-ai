@@ -39,6 +39,11 @@ class URLRequest(BaseModel):
 class EmailRequest(BaseModel):
     headers_text: str
 
+class ReportRequest(BaseModel):
+    url: str
+    risk_score: float
+    is_suspicious: bool
+    reported_by: str = "anonymous"
 class AnalysisResponse(BaseModel):
     url: str
     risk_score: float
@@ -137,6 +142,71 @@ def analyze_email(request: EmailRequest):
     result = analyze_email_headers(request.headers_text)
     return result
 
+import json
+from datetime import datetime
+
+@app.post("/report")
+def report_url(request: ReportRequest):
+    """Submit a URL to the community threat feed."""
+    feed_path = os.path.join(os.path.dirname(__file__), "threat_feed.json")
+    
+    # Load existing feed
+    try:
+        with open(feed_path, "r") as f:
+            feed = json.load(f)
+    except:
+        feed = []
+    
+    # Check if URL already reported
+    for entry in feed:
+        if entry["url"] == request.url:
+            return {
+                "message": "URL already exists in threat feed",
+                "already_reported": True
+            }
+    
+    # Add new entry
+    entry = {
+        "url": request.url,
+        "risk_score": request.risk_score,
+        "is_suspicious": request.is_suspicious,
+        "reported_by": request.reported_by,
+        "reported_at": datetime.now().isoformat(),
+        "id": len(feed) + 1
+    }
+    feed.append(entry)
+    
+    # Save
+    with open(feed_path, "w") as f:
+        json.dump(feed, f, indent=2)
+    
+    return {
+        "message": "URL reported successfully",
+        "already_reported": False,
+        "entry": entry
+    }
+
+@app.get("/threat-feed")
+def get_threat_feed():
+    """Get all reported URLs from the community threat feed."""
+    feed_path = os.path.join(os.path.dirname(__file__), "threat_feed.json")
+    
+    try:
+        with open(feed_path, "r") as f:
+            feed = json.load(f)
+    except:
+        feed = []
+    
+    # Return newest first
+    feed.sort(key=lambda x: x.get("reported_at", ""), reverse=True)
+    
+    suspicious_count = sum(1 for e in feed if e.get("is_suspicious"))
+    
+    return {
+        "total": len(feed),
+        "suspicious_count": suspicious_count,
+        "entries": feed
+    }
 
 @app.get("/health")
 def health_check():
