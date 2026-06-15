@@ -1,3 +1,4 @@
+import EmailAnalyzer from "./EmailAnalyzer";
 import { useState } from "react";
 import axios from "axios";
 import ThreatFeed from "./ThreatFeed";
@@ -12,6 +13,8 @@ function App() {
   const [page, setPage] = useState("scanner");
 
   if (page === "feed") return <ThreatFeed />;
+  if (page === "feed") return <ThreatFeed />;
+  if (page === "email") return <EmailAnalyzer />;
 
   const analyzeUrl = async () => {
     setLoading(true);
@@ -50,6 +53,12 @@ function App() {
             className="text-sm text-blue-400 hover:text-blue-300 transition"
           >
             🌐 Threat Feed
+          </button>
+          <button
+            onClick={() => setPage("email")}
+            className="text-sm text-blue-400 hover:text-blue-300 transition"
+          >
+            📧 Email Analyzer
           </button>
         </div>
       </div>
