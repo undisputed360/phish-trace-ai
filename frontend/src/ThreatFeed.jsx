@@ -13,7 +13,7 @@ function ThreatFeed() {
 
   const fetchFeed = async () => {
     try {
-      const response = await axios.get("${API_URL}/threat-feed");
+      const response = await axios.get(`${API_URL}/threat-feed`);
       setFeed(response.data);
     } catch (error) {
       setFeed({ error: "Failed to load threat feed" });
