@@ -12,7 +12,7 @@ print("PhishTrace AI - Model Training")
 print("=" * 50)
 
 # Load dataset
-dataset_path = "../dataset/phishing_urls.csv"
+dataset_path = "phishing_urls.csv"
 if not os.path.exists(dataset_path):
     print(f"Error: Dataset not found at {dataset_path}")
     exit(1)

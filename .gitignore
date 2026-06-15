@@ -225,7 +225,7 @@ frontend/node_modules/
 # Python
 __pycache__/
 *.pyc
-*.pkl
+# *.pkl
 
 # OS
 .DS_Store
