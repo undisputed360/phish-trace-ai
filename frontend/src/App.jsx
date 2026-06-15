@@ -2,7 +2,10 @@ import EmailAnalyzer from "./EmailAnalyzer";
 import { useState } from "react";
 import axios from "axios";
 import ThreatFeed from "./ThreatFeed";
-const API_URL = "https://phishtrace-ai-api.onrender.com";
+import UrlHighlighter from "./UrlHighlighter";
+
+const API_URL = "http://localhost:8000";
+// const API_URL = "https://phishtrace-ai-api.onrender.com";
 // For local dev, comment the above and uncomment below:
 
 function App() {
@@ -217,12 +220,11 @@ function App() {
             </button>
 
             {/* Raw URL */}
-            <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
-              <p className="text-xs text-gray-500 mb-1">Analyzed URL</p>
-              <p className="text-sm text-gray-400 break-all font-mono">
-                {result.url}
-              </p>
-            </div>
+            {/* URL Visual Highlight */}
+            <UrlHighlighter
+              url={result.url}
+              flaggedFeatures={result.flagged_features}
+            />
           </div>
         )}
 
