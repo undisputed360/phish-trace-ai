@@ -1,5 +1,5 @@
-const API_URL = "https://phishtrace-ai-api.onrender.com";
-// const API_URL = '${API_URL}';  // for local dev
+const API_URL = "http://localhost:8000";
+
 // Get current tab URL on popup open
 let currentUrl = "";
 
@@ -19,16 +19,13 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
   const errorDiv = document.getElementById("errorBox");
   const scanBtn = document.getElementById("scanBtn");
 
-  // Reset
   resultDiv.style.display = "none";
   errorDiv.style.display = "none";
-
-  // Show loading
   scanBtn.disabled = true;
   scanBtn.innerHTML = '<span class="loading-spinner"></span> Analyzing...';
 
   try {
-    const response = await fetch("${API_URL}/analyze", {
+    const response = await fetch(API_URL + "/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: currentUrl }),
@@ -40,7 +37,6 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
 
     const data = await response.json();
 
-    // Display result
     resultDiv.style.display = "block";
 
     if (data.is_suspicious) {
@@ -67,9 +63,9 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
   } catch (error) {
     errorDiv.style.display = "block";
     errorDiv.textContent =
-      "⚠️ Cannot connect to PhishTrace AI. Make sure the backend server is running on port 8000.";
+      "Cannot connect. Make sure the backend is running on localhost:8000";
   } finally {
     scanBtn.disabled = false;
-    scanBtn.textContent = "🔍 Scan This Page";
+    scanBtn.textContent = "Scan This Page";
   }
 });

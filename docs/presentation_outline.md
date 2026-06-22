@@ -5,7 +5,7 @@
 - 🛡️ PhishTrace AI
 - AI-Powered Phishing Detection with Explainable Intelligence
 - Hackverse X 2026 — Cybersecurity & Privacy Track
-- Team: [Your Name(s)]
+- Team: [Bitrus Haruna Amaza]
 
 ## Slide 2: The Problem
 
@@ -26,7 +26,6 @@
 
 ## Slide 4: Architecture
 
-- [Insert architecture diagram from docs/architecture.md]
 - Frontend: React + Vite + TailwindCSS
 - Backend: Python FastAPI
 - ML: Random Forest Classifier (21 features)
